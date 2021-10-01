@@ -12,6 +12,7 @@
 * Stack
 * Queue
 * Heap/Priority queue
+* Dynamic Array
 
 ## Solutions to the following codeforces contests are present:
 
