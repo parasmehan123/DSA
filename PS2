@@ -1,0 +1,62 @@
+# PS2
+
+https://leetcode.com/problems/reverse-nodes-in-k-group/
+
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        ListNode *reversedHead = NULL;
+        ListNode *reversedTail = NULL;
+        while(head != NULL) {
+            ListNode *curr = head;
+            bool notK = false;
+            for(int i = 1; i < k != NULL; ++ i) {
+                if(curr -> next == NULL) {
+                    notK = true;
+                    break;
+                }
+                curr = curr -> next;
+            }
+            if(notK) {
+                reversedTail -> next = head;
+                reversedTail = head;
+                break;
+            }
+            ListNode *nextK = head;
+            head = curr -> next;
+            curr -> next = NULL;
+            pair<ListNode*, ListNode*> reversedNextK = reverse(nextK);
+            if(reversedHead == NULL) {
+                reversedHead = reversedNextK.first;
+                reversedTail = reversedNextK.second;
+            } else {
+                reversedTail -> next = reversedNextK.first;
+                reversedTail = reversedNextK.second;
+            }
+        }
+        return reversedHead;
+    }
+    pair<ListNode*, ListNode*> reverse(ListNode *head) {
+        ListNode *tail = head, *prev = head, *curr = head -> next, *next;
+        tail -> next = NULL;
+        while(curr != NULL) {
+            next = curr -> next;
+            curr -> next = head;
+            head = curr;
+            prev = curr;
+            curr = next;
+        }
+        return {head, tail};
+    }
+};
